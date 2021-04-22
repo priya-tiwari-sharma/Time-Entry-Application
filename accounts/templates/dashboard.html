@@ -1,0 +1,102 @@
+{% extends 'index.html' %}
+{% block script-content %}
+<script >
+    function StartFunction(button) {
+        var today = new Date()
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        button.value = dateTime;
+    }
+    function EndFunction(button) {
+        var today = new Date()
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        button.value = button.value+','+ dateTime;
+    }
+</script>
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div>
+    </b><h1>This is the Dashboard</h1><b>
+    <table>
+    <tr>
+        <th>{% if user.is_authenticated %}<b>{{user.username}}</b></th>
+        <th><a href="{% url 'logout' %}"> LOGOUT</a></th>
+    </tr>
+    <tr>
+        <td><form method="POST">
+            {% csrf_token %}
+            <label for="name">Task Name:</label></td>
+        <td><input name="name" class="form-control" id="project_name"></td>
+    </tr>
+    <tr>
+        <td>
+            <label>Project Name:</label>
+        </td>
+        <td>
+            <select name="project_id">
+                {% for project in projects %}
+                    <option value="{{project.id}}">{{project.project_name}}</option>
+                {% endfor %}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button name="start" onclick="StartFunction(this)">START</button></td>
+    </tr>
+</table>
+</div>
+    
+    <div>
+        <h1><b>ALL TASK DETAILS</b></h1>
+        <table>
+            <tr>
+                <th>STOP THE TASK</th>
+                <th>Task Title</th>
+                <th>Project</th>
+                <th>START TIME</th>
+                <th>END TIME</th>
+                
+            </tr>
+            {% for task in tasks %}
+            {% if task.status %}             
+                <tr style="background-color:darkgrey;">
+                <td><button name ="end" value={{task.id}} onclick="EndFunction(this)">END</button></td>
+            {% else %}
+                <tr style="background-color: lightgrey;">
+                <td>Task Completed</td>
+            {% endif %}
+                <td>{{task.task_title}}</td>
+                <td>{{task.projects}}</td>
+                <td>{{task.start_time}}</td>
+                <td>{% if task.end_time %} {{task.end_time}} {% else %} still running.... {% endif %}</td>
+                
+
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    </div>
+
+        
+        {% else %}
+        <a href="{% url 'login_url' %}">LOGIN</a>
+        <a href="{% url 'register_url' %}">Register</a>
+    {% endif %}
+{% endblock %}

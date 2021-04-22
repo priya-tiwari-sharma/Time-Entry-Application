@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        {% block script-content %}
+        {% endblock %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+    {% block content %}
+    <h1>Time-Entry Application Homepage</h1>
+    <table>
+        <tr>
+            <td><label>Existing User</label></td>
+            <td><a href="{% url 'login_url' %}">LOGIN</a></td>
+        </tr>
+        <tr>
+            <td><label>New User</label></td>
+            <td><a href="{% url 'register_url' %}">Register</a></td>
+        </tr>
+    </table>
+    
+    
+    {% endblock content %}
+    
+    </body>
+</html>
