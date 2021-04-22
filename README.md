@@ -1,6 +1,8 @@
 # Time-Entry-Application
 Time-Entry-Application with User registration
 
+Video Representation of project
+https://drive.google.com/file/d/1NWvEveygAFiq_cP7-HrhNCc_C63Q_y3i/view?usp=sharing
 
 
 Create a time-entry application in Django and database of your choice.
